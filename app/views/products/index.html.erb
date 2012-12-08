@@ -22,18 +22,17 @@
       <tr>
         <td><%= product.id %></td>
       	<td><%= product.name %></td>
-      	<td>$<%= product.price %></td>
+      	<td data-product='<%= product.id %>'>$<%= product.price %></td>
       	<td><%= product.user.name if product.user.present? %></td>
+        <td><%= link_to "+", product_path(product),
+                'data-incr-price' => product.id,
+                :method => :put %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= 
-  @products.map do |product|
-    [product.name, product.price/@sum_price]
-  end 
-%>
 
 <script type='text/javascript'>
   $(document).ready(function(){
