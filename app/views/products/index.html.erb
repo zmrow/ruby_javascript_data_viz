@@ -1,6 +1,11 @@
 <h2> Products in the market </h2>
 
-<a href="javascript:void(0)" onclick="$('#highChartContainer').toggle()">Chart</a>
+<a href="#" data-hide-element='chart'>Chart</a>
+
+<script type="text/javascript">$('[data-hide-element=chart]').on('click', function(){
+      $('#highChartContainer').toggle()
+  });
+</script>
 
 <div id="highChartContainer" style="min-width:400px; height: 400px; margin: 0 auto"></div>
 
