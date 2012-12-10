@@ -25,6 +25,7 @@
       	<td data-product='<%= product.id %>'>$<%= product.price %></td>
       	<td><%= product.user.name if product.user.present? %></td>
         <td><%= link_to "+", product_path(product),
+                'data-price' => product.price,
                 'data-incr-price' => product.id,
                 :method => :put %>
         </td>
@@ -62,6 +63,28 @@
 
 
 <script type="text/javascript">console.log('the number of products is ' + '<%= @products.count %>');</script>
+
+<script type="text/javascript">
+  $('[data-incr-price]').on('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    url = $(this).attr('href');
+    price = $(this).attr('data-price');
+    newPrice = parseInt(price) + 1;
+
+    console.log(location.protocol + "//" + location.host + url);
+
+    $.ajax({ url: url,
+             type: 'put',
+             dataType: 'json',
+             data: { product: {price: newPrice} }
+           }).success(function(data, textStatus, JqXHR) {
+            $('[data-product='+ data.id+']').html("$" + data.price);
+            $('[data-incr-price='+ data.id+']').attr('data-price', data.price);
+           });
+  })
+</script>
 
 
 
